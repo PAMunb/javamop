@@ -23,6 +23,10 @@
 		<connection>scm:git:https://github.com/PAMunb/javamop.git</connection>
 	</scm>
 
+	<properties>
+		<integration.test.regex>**/*IT.java</integration.test.regex>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.runtimeverification.rvmonitor</groupId>
@@ -42,7 +46,7 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -163,11 +167,27 @@
 					<systemPropertyVariables>
 						<testOutDir>${project.build.testOutputDirectory}</testOutDir>
 					</systemPropertyVariables>
+					<excludes>
+						<exclude>**/Abstract*</exclude>
+						<exclude>${integration.test.regex}</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+
+					<!-- TODO -->
+<!-- 					<skipITs>true</skipITs> -->
+
+					<includes>
+						<include>${integration.test.regex}</include>
+					</includes>
+					<excludes>
+						<exclude>**/Abstract*.java</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -176,7 +196,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 		</plugins>
 	</build>
 
